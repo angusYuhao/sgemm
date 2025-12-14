@@ -12,7 +12,7 @@ __global__ void sgemm_global_memory_coalesce_v1_kernel(uint32_t M, uint32_t N,
                                                        const float *B,
                                                        float beta, float *C) {
     const uint32_t m = blockIdx.x * BLOCK_SIZE + (threadIdx.x / BLOCK_SIZE);
-    const uint32_t n = blockIdx.y * BLOCK_SIZE + (threadIdx.x / BLOCK_SIZE);
+    const uint32_t n = blockIdx.y * BLOCK_SIZE + (threadIdx.x % BLOCK_SIZE);
 
     if (m < M && n < N) {
         float accum = 0;
