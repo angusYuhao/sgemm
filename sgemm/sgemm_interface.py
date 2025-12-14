@@ -1,7 +1,9 @@
 import torch
 
+
 def sgemm_cpu(A, B, C, alpha, beta):
     return alpha * (A @ B) + beta * C
+
 
 def sgemm_rand(M, N, K, alpha, beta, version):
     assert torch.cuda.is_available(), "cuda must be available"

@@ -1,0 +1,40 @@
+repos:
+  # ----------------------------------
+  # Generic hygiene
+  # ----------------------------------
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.6.0
+    hooks:
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+      - id: check-yaml
+      - id: check-added-large-files
+
+  # ----------------------------------
+  # C / C++ / CUDA formatting
+  # ----------------------------------
+  - repo: https://github.com/pre-commit/mirrors-clang-format
+    rev: v17.0.6
+    hooks:
+      - id: clang-format
+        name: clang-format (C/C++/CUDA)
+        files: \.(c|cc|cpp|cxx|h|hpp|cu)$
+        args: [--style=file]
+
+  # ----------------------------------
+  # Python formatting
+  # ----------------------------------
+  - repo: https://github.com/psf/black
+    rev: 24.4.2
+    hooks:
+      - id: black
+        language_version: python3
+
+  # ----------------------------------
+  # Python linting (fast)
+  # ----------------------------------
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.5.0
+    hooks:
+      - id: ruff
+        args: [--fix]

@@ -37,7 +37,7 @@ def get_extensions():
         ],
         "nvcc": [
             "-O3" if not debug_mode else "-O0",
-        ]
+        ],
     }
 
     if debug_mode:
@@ -67,6 +67,7 @@ def get_extensions():
     ]
 
     return ext_modules
+
 
 setup(
     name=library_name,
