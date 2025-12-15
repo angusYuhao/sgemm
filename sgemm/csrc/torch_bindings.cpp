@@ -63,7 +63,9 @@ void sgemm_cuda(const torch::Tensor &A, const torch::Tensor &B, torch::Tensor &C
                                          static_cast<float>(beta));
     break;
   case SgemmVersion::sgemm_shared_memory_blocking:
-    print_sgemm_version_error();
+    sgemm_shared_memory_blocking_cuda(M, N, K, (float *)(A.data_ptr()), (float *)(B.data_ptr()),
+                                      (float *)(C.data_ptr()), static_cast<float>(alpha),
+                                      static_cast<float>(beta));
     break;
   default:
     print_sgemm_version_error();
