@@ -11,7 +11,7 @@ __global__ void sgemm_naive_kernel(uint32_t M, uint32_t N, uint32_t K,
   const uint32_t m = blockIdx.x * blockDim.x + threadIdx.x;
   const uint32_t n = blockIdx.y * blockDim.y + threadIdx.y;
 
-  if (m < N && n < N) {
+  if (m < M && n < N) {
     float accum = 0;
     for (int k = 0; k < K; k++) {
       accum += A[m * K + k] * B[k * N + n];
