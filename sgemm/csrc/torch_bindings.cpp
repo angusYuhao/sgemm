@@ -38,7 +38,10 @@ enum class SgemmVersion {
   sgemm_naive,
   sgemm_global_memory_coalesce_v1,
   sgemm_global_memory_coalesce_v2,
-  sgemm_shared_memory_blocking,
+  sgemm_shared_memory_blocking_v1,
+  sgemm_shared_memory_blocking_v2,
+  sgemm_1d_blocktiling_v1,
+  sgemm_1d_blocktiling_v2,
 };
 
 void sgemm_cuda(const torch::Tensor &A, const torch::Tensor &B, torch::Tensor &C, double alpha,
@@ -62,10 +65,25 @@ void sgemm_cuda(const torch::Tensor &A, const torch::Tensor &B, torch::Tensor &C
                                          (float *)(C.data_ptr()), static_cast<float>(alpha),
                                          static_cast<float>(beta));
     break;
-  case SgemmVersion::sgemm_shared_memory_blocking:
-    sgemm_shared_memory_blocking_cuda(M, N, K, (float *)(A.data_ptr()), (float *)(B.data_ptr()),
-                                      (float *)(C.data_ptr()), static_cast<float>(alpha),
-                                      static_cast<float>(beta));
+  case SgemmVersion::sgemm_shared_memory_blocking_v1:
+    sgemm_shared_memory_blocking_v1_cuda(M, N, K, (float *)(A.data_ptr()), (float *)(B.data_ptr()),
+                                         (float *)(C.data_ptr()), static_cast<float>(alpha),
+                                         static_cast<float>(beta));
+    break;
+  case SgemmVersion::sgemm_shared_memory_blocking_v2:
+    sgemm_shared_memory_blocking_v2_cuda(M, N, K, (float *)(A.data_ptr()), (float *)(B.data_ptr()),
+                                         (float *)(C.data_ptr()), static_cast<float>(alpha),
+                                         static_cast<float>(beta));
+    break;
+  case SgemmVersion::sgemm_1d_blocktiling_v1:
+    sgemm_1d_blocktiling_v1_cuda(M, N, K, (float *)(A.data_ptr()), (float *)(B.data_ptr()),
+                                 (float *)(C.data_ptr()), static_cast<float>(alpha),
+                                 static_cast<float>(beta));
+    break;
+  case SgemmVersion::sgemm_1d_blocktiling_v2:
+    sgemm_1d_blocktiling_v2_cuda(M, N, K, (float *)(A.data_ptr()), (float *)(B.data_ptr()),
+                                 (float *)(C.data_ptr()), static_cast<float>(alpha),
+                                 static_cast<float>(beta));
     break;
   default:
     print_sgemm_version_error();
